@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class Home extends AppCompatActivity {
     private TextView ErrorMsg;
     private EditText txtUsername;
     private EditText txtPassword;
@@ -36,11 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        txtUsername = findViewById(R.id.username);
-        txtPassword = findViewById(R.id.password);
-        ErrorMsg = findViewById(R.id.ErrorMsg);
-        ErrorMsg.setVisibility(View.INVISIBLE);
+        setContentView(R.layout.activity_home);
+
     }
 
     public void onSignin(View v)

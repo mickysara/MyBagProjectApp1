@@ -1,5 +1,7 @@
 package com.example.httprequest.ui.home;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.httprequest.R;
 
 public class HomeFragment extends Fragment {
+    private TextView Money;
 
     private HomeViewModel homeViewModel;
 
@@ -24,10 +27,20 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
+        Money = root.findViewById(R.id.Showmoney);
+        SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
+
+        String M = sp.getString("Money","");
+
+
+
+        Money.setText("คุณมียอดเงินคงเหลือ"+ M);
+
+
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;
