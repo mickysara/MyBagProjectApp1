@@ -46,7 +46,10 @@ public class SlideshowFragment extends Fragment {
         Id_Users = root.findViewById(R.id.Usertxt);
         Money = root.findViewById(R.id.moneytxt);
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        IdLogin = sp.getString("Money","");
+        String M = sp.getString("Id_Users","");
+        IdLogin = M;
+
+
 
         final View button = root.findViewById(R.id.button);
         button.setOnClickListener(
@@ -54,12 +57,12 @@ public class SlideshowFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String Id = Id_Users.getText().toString();
-                        String money = Money.getText().toString();
-
+                        int money = Integer.parseInt(Money.getText().toString());
+                        Log.d("Hello","money"+money);
                         RequestParams params = new RequestParams();
                         params.put("Id", Id);
                         params.put("Money", money);
-                        params.put("Owner",IdLogin);
+                        params.put("Owner","025930461012-6");
 
                         AsyncHttpClient http = new AsyncHttpClient();
                         http.post("https://www.harmonicmix.xyz/api/Deposit_api", params, new JsonHttpResponseHandler(){
@@ -78,6 +81,8 @@ public class SlideshowFragment extends Fragment {
                                 try {
                                     status = (String) obj.get("status");
 
+
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -90,10 +95,14 @@ public class SlideshowFragment extends Fragment {
                                     Toast.makeText(getActivity(), "โอนเงินเรียบร้อย่", Toast.LENGTH_LONG).show();
                                     Log.d("hello","Success");
                                 }
-                                else
+                                else if(status.equals("OK"))
                                 {
+
                                     Toast.makeText(getActivity(), "โอนเงินเรียบร้อย่", Toast.LENGTH_LONG).show();
+
                                     Log.d("hello","Success");
+                                }else{
+                                    Log.d("hello",status);
                                 }
                             }
 
