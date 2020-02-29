@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject c = User.getJSONObject(i);
                         Fname = c.getString("Fname");
                         Lname = c.getString("Lname");
-                        Id_Users = c.getString("Username");
+                        Id_Users = c.getString("Id_Users");
                         Id_Title = c.getString("Id_Title");
                         Money = c.getString("Money");
                     }
