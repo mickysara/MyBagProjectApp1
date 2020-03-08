@@ -27,4 +27,24 @@
         tools:layout_editor_absoluteX="112dp"
         tools:layout_editor_absoluteY="290dp" />
 
+    <TextView
+        android:id="@+id/Latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/Longtitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_tools" />
+
+    <TextView
+        android:id="@+id/Longtitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="198dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.password);
         ErrorMsg = findViewById(R.id.ErrorMsg);
         ErrorMsg.setVisibility(View.INVISIBLE);
+
+        Intent intent = new Intent(getApplicationContext(), Transaction.class);
+        startActivity(intent);
+
+    }
+    @Override
+    protected void onResume() {
+        SharedPreferences sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
+        if ((sp.contains("FNAME")) && sp.contains("LNAME")){
+            Intent intent = new Intent(getApplicationContext(), Transaction.class);
+            startActivity(intent);
+            finish();
+        }
+        super.onResume();
     }
 
     public void onSignin(View v)
