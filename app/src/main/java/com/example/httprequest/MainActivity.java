@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         ErrorMsg = findViewById(R.id.ErrorMsg);
         ErrorMsg.setVisibility(View.INVISIBLE);
 
-//        Intent intent = new Intent(getApplicationContext(), Transaction.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), Transaction.class);
+        startActivity(intent);
 
     }
     @Override

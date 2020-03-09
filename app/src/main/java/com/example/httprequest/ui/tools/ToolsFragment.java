@@ -34,6 +34,7 @@ import java.util.StringTokenizer;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
 
 
 public class ToolsFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -55,6 +56,10 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
             @Override
             public void onClick(View v) {
 
+                if (ActivityCompat.checkSelfPermission(getContext(), CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermission();
+                }
+
                 zXingScannerView = new ZXingScannerView(getActivity());
                 getActivity().setContentView(zXingScannerView);
                 zXingScannerView.startCamera();
@@ -69,11 +74,26 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                         StringTokenizer tokens = new StringTokenizer(resultString, "|");
                         String first = tokens.nextToken();// this will contain "Fruit"
                         String second = tokens.nextToken();
-                        Toast.makeText(getActivity(), "QR code = " + first,
-                                Toast.LENGTH_LONG).show();
-                        Log.d("12MarchV1", "QR code ==> " + first);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentMainFragment, new ToolsFragment()).commit();
+
+                        StringTokenizer GetType = new StringTokenizer(second, "=");
+                        String nameType = GetType.nextToken();// this will contain "Fruit"
+                        String Type = GetType.nextToken();
+
+                        if(Type.equals("Activity"))
+                        {
+                             Toast.makeText(getActivity(), "QR code = " + "hello",
+                                                          Toast.LENGTH_LONG).show();
+                        }
+
+                        StringTokenizer Getid = new StringTokenizer(first, "=");
+                        String nameid = Getid.nextToken();// this will contain "Fruit"
+                        String id = Getid.nextToken();
+
+//                        Toast.makeText(getActivity(), "QR code = " + id,
+//                                Toast.LENGTH_LONG).show();
+                        Log.d("12MarchV1", "QR code ==> " + resultString);
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.contentMainFragment, new ToolsFragment()).commit();
                     }
                 });
 
