@@ -29,6 +29,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.zxing.Result;
 
+import java.util.StringTokenizer;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -64,9 +66,12 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                         zXingScannerView.stopCamera();
                         getActivity().setContentView(R.layout.activity_tool);
                         String resultString = result.getText().toString();
-                        Toast.makeText(getActivity(), "QR code = " + resultString,
+                        StringTokenizer tokens = new StringTokenizer(resultString, "|");
+                        String first = tokens.nextToken();// this will contain "Fruit"
+                        String second = tokens.nextToken();
+                        Toast.makeText(getActivity(), "QR code = " + first,
                                 Toast.LENGTH_LONG).show();
-                        Log.d("12MarchV1", "QR code ==> " + resultString);
+                        Log.d("12MarchV1", "QR code ==> " + first);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentMainFragment, new ToolsFragment()).commit();
                     }
