@@ -1,7 +1,6 @@
 package com.example.httprequest.ui.slideshow;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,19 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.httprequest.R;
-import com.example.httprequest.Transaction;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +41,7 @@ public class SlideshowFragment extends Fragment {
         Id_Users = root.findViewById(R.id.Usertxt);
         Money = root.findViewById(R.id.moneytxt);
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        IdLogin = sp.getString("Money","");
+        IdLogin = sp.getString("Id_Users","");
 
         final View button = root.findViewById(R.id.button);
         button.setOnClickListener(
