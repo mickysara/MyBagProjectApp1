@@ -50,18 +50,19 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
     protected TextView longitudeText;
     protected TextView latitudeText;
     protected Location lastLocation;
+
     private Button scan_btn;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    public String La;
-    public  String Long;
+    public String La="100";
+    public  String Long="200";
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
-        longitudeText = (TextView) root.findViewById(R.id.Latitude);
-        latitudeText = (TextView) root.findViewById(R.id.Longtitude);
+        latitudeText = (TextView) root.findViewById(R.id.Latitude);
+        longitudeText = (TextView) root.findViewById(R.id.Longtitude);
 
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -116,6 +117,7 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                 // Logic to handle location object
                                 latitudeText.setText(String.valueOf(location.getLatitude()));
                                 La = String.valueOf(location.getLatitude());
+                                Log.d("Latitude",La);
                                 Long = String.valueOf(location.getLongitude());
                                 longitudeText.setText(String.valueOf(location.getLongitude()));
                             }
@@ -149,79 +151,93 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                 Toast.makeText(getContext(), "You cancelled the scanning", Toast.LENGTH_LONG).show();
             }
             else {
+                fusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    // Logic to handle location object
+                                    latitudeText.setText(String.valueOf(location.getLatitude()));
+                                    La = String.valueOf(location.getLatitude());
+                                    Log.d("Latitude",La);
+                                    Long = String.valueOf(location.getLongitude());
+                                    longitudeText.setText(String.valueOf(location.getLongitude()));
+                                    SharedPreferences sp = getContext().getSharedPreferences("USER", Context.MODE_PRIVATE);
+                                    String Iduser = sp.getString("Id_Users","");
+                                    String resultString = result.getContents();
+                                    StringTokenizer tokens = new StringTokenizer(resultString, "|");
+                                    String first = tokens.nextToken();// this will contain "Fruit"
+                                    String second = tokens.nextToken();
 
-//                Toast.makeText(getContext(), result.getContents(),Toast.LENGTH_LONG).show();
+                                    StringTokenizer GetType = new StringTokenizer(second, "=");
+                                    String nameType = GetType.nextToken();// this will contain "Fruit"
+                                    String Type = GetType.nextToken();
 
-                SharedPreferences sp = getContext().getSharedPreferences("USER", Context.MODE_PRIVATE);
-                String Iduser = sp.getString("Id_Users","");
-                String resultString = result.getContents();
-                StringTokenizer tokens = new StringTokenizer(resultString, "|");
-                String first = tokens.nextToken();// this will contain "Fruit"
-                String second = tokens.nextToken();
+                                    StringTokenizer Getid = new StringTokenizer(first, "=");
+                                    String nameid = Getid.nextToken();// this will contain "Fruit"
+                                    String id = Getid.nextToken();
 
-                StringTokenizer GetType = new StringTokenizer(second, "=");
-                String nameType = GetType.nextToken();// this will contain "Fruit"
-                String Type = GetType.nextToken();
-
-                StringTokenizer Getid = new StringTokenizer(first, "=");
-                String nameid = Getid.nextToken();// this will contain "Fruit"
-                String id = Getid.nextToken();
-
-                if(Type.equals("Activity"))
-                {
-                    RequestParams params = new RequestParams();
-                    params.put("IdAc",id );
-                    params.put("IdUser", Iduser);
-                    params.put("Latitude",latitudeText.getText().toString());
-                    params.put("Longtitude",longitudeText.getText().toString());
-                    Log.d("hello", "onActivityResult: " + La );
-                    AsyncHttpClient http = new AsyncHttpClient();
-                    http.post("https://www.harmonicmix.xyz/api/JoinActivity_api", params, new JsonHttpResponseHandler(){
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
-                            JSONObject obj = null;
-                            try {
-                                obj = new JSONObject(response.toString());
+                                    if(Type.equals("Activity"))
+                                    {
 
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                        RequestParams params = new RequestParams();
+                                        params.put("IdAc",id );
+                                        params.put("IdUser", Iduser);
+                                        params.put("Latitude",La);
+                                        params.put("Longtitude",Long);
+                                        AsyncHttpClient http = new AsyncHttpClient();
+                                        http.post("https://www.harmonicmix.xyz/api/JoinActivity_api", params, new JsonHttpResponseHandler(){
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
+                                                JSONObject obj = null;
+                                                try {
+                                                    obj = new JSONObject(response.toString());
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                String status = null;
+                                                try {
+                                                    status = (String) obj.get("status");
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if(status.equals("NotinActivities"))
+                                                {
+                                                    Toast.makeText(getContext(), "ไม่มีสิทธิ์"+Iduser, Toast.LENGTH_LONG).show();
+                                                    Log.d("hello","Not users");
+                                                }else if(status.equals("NotinDate"))
+                                                {
+                                                    Toast.makeText(getContext(), "ไม่ได้อยู่ในวันนั้น", Toast.LENGTH_LONG).show();
+                                                    Log.d("hello","Success");
+
+                                                }else if(status.equals("NotinArea"))
+                                                {
+                                                    Toast.makeText(getContext(), "ไม่ได้อยู่ในพื้นที่", Toast.LENGTH_LONG).show();
+                                                    Log.d("hello","Success");
+                                                }
+                                                else
+                                                {
+                                                    Toast.makeText(getContext(), "บันทึกกิจกรรม", Toast.LENGTH_LONG).show();
+                                                    Log.d("hello","Success");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                                super.onFailure(statusCode, headers, responseString, throwable);
+                                                Log.d("onFailure", Integer.toString(statusCode));
+                                            }
+                                        });
+                                    }
+                                }
                             }
-                            String status = null;
-                            try {
-                                status = (String) obj.get("status");
+                        });
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            if(status.equals("NotinActivities"))
-                            {
-                                Toast.makeText(getContext(), "ไม่มีสิทธิ์"+Iduser, Toast.LENGTH_LONG).show();
-                                Log.d("hello","Not users");
-                            }else if(status.equals("NotinDate"))
-                            {
-                                Toast.makeText(getContext(), "ไม่ได้อยู่ในวันนั้น", Toast.LENGTH_LONG).show();
-                                Log.d("hello","Success");
-
-                            }else if(status.equals("NotinArea"))
-                            {
-                                Toast.makeText(getContext(), "ไม่ได้อยู่ในพื้นที่", Toast.LENGTH_LONG).show();
-                                Log.d("hello","Success");
-                            }
-                            else
-                            {
-                                Toast.makeText(getContext(), "บันทึกกิจกรรม", Toast.LENGTH_LONG).show();
-                                Log.d("hello","Success");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            super.onFailure(statusCode, headers, responseString, throwable);
-                            Log.d("onFailure", Integer.toString(statusCode));
-                        }
-                    });
-                }
             }
         }
         else {

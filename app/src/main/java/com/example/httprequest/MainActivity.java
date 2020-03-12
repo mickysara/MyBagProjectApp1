@@ -1,7 +1,5 @@
 package com.example.httprequest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -32,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
     String Id_Users;
     String Id_Title;
     String Money;
-    public static final String FNAME = "FNAME";
+
+    private SharedPreferences sharedPrefer;
+    public static final String APP_PREFER = "USER" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +44,13 @@ public class MainActivity extends AppCompatActivity {
         ErrorMsg = findViewById(R.id.ErrorMsg);
         ErrorMsg.setVisibility(View.INVISIBLE);
 
-        Intent intent = new Intent(getApplicationContext(), Transaction.class);
-        startActivity(intent);
-
     }
     @Override
     protected void onResume() {
-        SharedPreferences sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
-        if ((sp.contains("FNAME")) && sp.contains("LNAME")){
-            Intent intent = new Intent(getApplicationContext(), Transaction.class);
-            startActivity(intent);
+        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
+        if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
+            Intent i = new Intent(this, Transaction.class);
+            startActivity(i);
             finish();
         }
         super.onResume();
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("FNAME", Fname);
-                    editor.putString("Lname", Lname);
+                    editor.putString("LNAME", Lname);
                     editor.putString("Id_Users", Id_Users);
                     editor.putString("Id_Title", Id_Title);
                     editor.putString("Money", Money);

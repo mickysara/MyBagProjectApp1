@@ -1,7 +1,5 @@
 package com.example.httprequest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -33,11 +32,26 @@ public class Home extends AppCompatActivity {
     String Id_Title;
     String Money;
     public static final String FNAME = "FNAME";
+    private SharedPreferences sharedPrefer;
+    public static final String APP_PREFER = "appPrefer" ;
+    public static final String USERNAME_PREFER = "usernamePref";
+    public static final String PASSWORD_PREFER = "passwordPref";
+    public static final String EMP_TYPE_PREFER = "empTypePref";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+    }
+    @Override
+    protected void onResume() {
+        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
+        if ((sharedPrefer.contains(Fname)) && sharedPrefer.contains(Lname)){
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+        super.onResume();
     }
 
     public void onSignin(View v)
