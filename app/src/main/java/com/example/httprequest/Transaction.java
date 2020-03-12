@@ -1,47 +1,27 @@
 package com.example.httprequest;
 
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.example.httprequest.ui.TransactionResponse;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.util.Log;
+import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
-import com.loopj.android.http.RequestParams;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.Collection;
-
-import cz.msebera.android.httpclient.Header;
+import com.google.android.material.snackbar.Snackbar;
 
 public class Transaction extends AppCompatActivity {
 
+    TextView Name;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -71,6 +51,14 @@ public class Transaction extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        View headerView = navigationView.getHeaderView(0);
+        Name = headerView.findViewById(R.id.Name);
+
+        SharedPreferences sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
+
+        String Fname = sp.getString("FNAME","");
+        String Lname = sp.getString("LNAME","");
+        Name.setText(Fname +" "+Lname);
 
     }
 
