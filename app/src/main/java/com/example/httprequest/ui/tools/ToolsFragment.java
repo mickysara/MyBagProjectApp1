@@ -22,6 +22,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.httprequest.R;
+import com.example.httprequest.TranferQR;
+import com.example.httprequest.Transaction;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,6 +57,7 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
     private FusedLocationProviderClient fusedLocationProviderClient;
     public String La="100";
     public  String Long="200";
+    private ToolsFragment ToolsFragmentListener;
 
 
     @Nullable
@@ -209,7 +212,6 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                 if(status.equals("NotinActivities"))
                                                 {
                                                     Toast.makeText(getContext(), "ไม่มีสิทธิ์"+Iduser, Toast.LENGTH_LONG).show();
-                                                    Log.d("hello","Not users");
                                                 }else if(status.equals("NotinDate"))
                                                 {
                                                     Toast.makeText(getContext(), "ไม่ได้อยู่ในวันนั้น", Toast.LENGTH_LONG).show();
@@ -224,6 +226,19 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                 {
                                                     Toast.makeText(getContext(), "บันทึกกิจกรรม", Toast.LENGTH_LONG).show();
                                                     Log.d("hello","Success");
+                                                    /*
+                                                    Fragment newFragment = new HomeFragment();
+                                                    // consider using Java coding conventions (upper first char class names!!!)
+                                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                                    // Replace whatever is in the fragment_container view with this fragment,
+                                                    // and add the transaction to the back stack
+                                                    transaction.replace(R.id.child_fragment, newFragment);
+                                                    transaction.addToBackStack(null);
+                                                    // Commit the transaction
+                                                    transaction.commit();*/
+                                                    Intent i = new Intent(getContext(), Transaction.class);
+                                                    i.putExtra("test",1);
+                                                    startActivity(i);
                                                 }
                                             }
 
@@ -233,6 +248,59 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                 Log.d("onFailure", Integer.toString(statusCode));
                                             }
                                         });
+
+                                    }else if(Type.equals("Users"))
+                                    {
+                                        Toast.makeText(getContext(), "Users", Toast.LENGTH_LONG).show();
+                                        RequestParams params = new RequestParams();
+                                        params.put("id",id );
+                                        AsyncHttpClient http = new AsyncHttpClient();
+                                        http.post("https://www.harmonicmix.xyz/api/GetUserTranfer_api", params, new JsonHttpResponseHandler(){
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
+                                                JSONObject obj = null;
+                                                try {
+                                                    obj = new JSONObject(response.toString());
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                String status = null;
+                                                String id     = null;
+                                                String Name   = null;
+                                                String IdUser   = null;
+                                                try {
+                                                    status = (String) obj.get("status");
+                                                    id = (String) obj.get("Id");
+                                                    Name = (String) obj.get("Name");
+                                                    IdUser = (String) obj.get("Id_Users");
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if(status.equals("Success"))
+                                                {
+                                                    Intent i = new Intent(getContext(), TranferQR.class);
+                                                    i.putExtra("id",id);
+                                                    i.putExtra("Name",Name);
+                                                    i.putExtra("IdUser",IdUser);
+                                                    startActivity(i);
+                                                }
+                                                else
+                                                {
+                                                    Toast.makeText(getContext(), "ไม่พบบัญชี", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                                super.onFailure(statusCode, headers, responseString, throwable);
+                                                Log.d("onFailure", Integer.toString(statusCode));
+                                            }
+                                        });
+                                    }else
+                                    {
+                                        Toast.makeText(getContext(), Type, Toast.LENGTH_LONG).show();
                                     }
                                 }
                             }
@@ -244,4 +312,5 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 }

@@ -1,8 +1,10 @@
 package com.example.httprequest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -59,6 +61,23 @@ public class Transaction extends AppCompatActivity {
         String Fname = sp.getString("FNAME","");
         String Lname = sp.getString("LNAME","");
         Name.setText(Fname +" "+Lname);
+
+        Intent intent = getIntent();
+
+        // Get the extras (if there are any)
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("hello")) {
+                boolean isNew = extras.getBoolean("hello", false);
+                String test = intent.getStringExtra("hello");
+                Log.d("test","hello"+test);
+                // TODO: Do something with the value of isNew.
+            }
+        }
+//        Intent i = getIntent();
+//        String test = i.getStringExtra("test");
+////
+////        Log.d("test",test);
 
     }
 

@@ -41,7 +41,7 @@ public class SlideshowFragment extends Fragment {
         Id_Users = root.findViewById(R.id.Usertxt);
         Money = root.findViewById(R.id.moneytxt);
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        IdLogin = sp.getString("Id_Users","");
+        IdLogin = sp.getString("Username","");
 
         final View button = root.findViewById(R.id.button);
         button.setOnClickListener(

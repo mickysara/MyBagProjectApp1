@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String Id_Users;
     String Id_Title;
     String Money;
+    String Username;
 
     private SharedPreferences sharedPrefer;
     public static final String APP_PREFER = "USER" ;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         Id_Users = c.getString("Id_Users");
                         Id_Title = c.getString("Id_Title");
                         Money = c.getString("Money");
+                        Username = c.getString("Username");
                     }
 
                 } catch (JSONException e) {
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("FNAME", Fname);
                     editor.putString("LNAME", Lname);
                     editor.putString("Id_Users", Id_Users);
+                    editor.putString("Username", Username);
                     editor.putString("Id_Title", Id_Title);
                     editor.putString("Money", Money);
                     editor.commit();
