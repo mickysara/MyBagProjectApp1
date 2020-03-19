@@ -1,9 +1,5 @@
 package com.example.httprequest;
 
-import android.app.Person;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +33,7 @@ public class TestShow extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Person> people;
     public String IMAGE_URL = "";
+    TextView Hello;
 
 
     @Override
@@ -69,9 +66,13 @@ public class TestShow extends AppCompatActivity {
                             //Log.d("myCat", String.valueOf(i));
                             JSONObject item = data.getJSONObject(i);
                             people.add(
-                                    new Person(item.getString("Id_Student"),
-                                            item.getString("Fname"),
-                                            item.getString("Lname")));
+                                    new Person(item.getString("Transaction_Of"),
+                                            item.getString("Method"),
+                                            item.getString("Recived_Transaction"),
+                                            item.getString("Money"),
+                                            item.getString("Status"),
+                                            item.getString("TimeStamp"),
+                                            item.getString("chk")));
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                             recyclerView.setAdapter(new PersonAdapter(people));
@@ -93,15 +94,24 @@ public class TestShow extends AppCompatActivity {
 
     }
     class Person {
-        public String empID;
-        public String firstName;
-        public String lastName;
+        public String Transaction_Of;
+        public String Method;
+        public String Recived_Transaction;
+        public String Money;
+        public String Status;
+        public String TimeStamp;
+        public String chk;
         public boolean isChecked;
 
-        public Person(String empID, String firstName, String lastName) {
-            this.empID = empID;
-            this.firstName = firstName;
-            this.lastName = lastName;
+        public Person(String Transaction_Of, String Method, String Recived_Transaction,String Money,String Status,String TimeStamp,String chk) {
+            this.Transaction_Of = Transaction_Of;
+            this.Method = Method;
+            this.Recived_Transaction = Recived_Transaction;
+            this.Money = Money;
+            this.Status = Status;
+            this.TimeStamp = TimeStamp;
+            this.chk = chk;
+
 
         }
     }
@@ -127,13 +137,16 @@ public class TestShow extends AppCompatActivity {
 
             //Log.d("mylog","xx" + person.imageFileName);
 
-            holder.textView.setText(person.empID + " " +person.firstName + " " + person.lastName);
+            holder.Method.setText(person.Method);
+            holder.Date.setText(person.TimeStamp);
+            holder.Amount.setText(person.Money);
+
 
             //holder.checkBox.setChecked(person.isChecked);
             //holder.textView.setText(String.format("%d %s(%d)", position, person.firstName, person.age));
             //holder.textView.setTextColor(Color.RED);
 
-            final String empID = person.empID;
+
 
         }
 
@@ -145,15 +158,21 @@ public class TestShow extends AppCompatActivity {
         class PersonHolder extends RecyclerView.ViewHolder {
 
             public Person person;
-            public TextView textView;
+            public TextView Amount;
+            public TextView Method;
+            public TextView Date;
+            public TextView Transac;
             public ImageView imageView;
             public CheckBox checkBox;
 
             public PersonHolder(View itemView) {
                 super(itemView);
 
-                textView = itemView.findViewById(R.id.txtFullName);
-                imageView = itemView.findViewById(R.id.imageView);
+                Amount = itemView.findViewById(R.id.amount);
+                Method = itemView.findViewById(R.id.Method);
+                Date = itemView.findViewById(R.id.Date);
+                Transac = itemView.findViewById(R.id.Transac);
+
 
              /*
              checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
