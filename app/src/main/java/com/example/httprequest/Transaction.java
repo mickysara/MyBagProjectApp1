@@ -26,6 +26,7 @@ public class Transaction extends AppCompatActivity {
     TextView Name;
     private AppBarConfiguration mAppBarConfiguration;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class Transaction extends AppCompatActivity {
 
         String Fname = sp.getString("FNAME","");
         String Lname = sp.getString("LNAME","");
-        Name.setText(Fname +" "+Lname);
+        Name.setText("คุณ"+Fname +" "+Lname);
 
         Intent intent = getIntent();
 

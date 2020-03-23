@@ -37,6 +37,7 @@ public class Home extends AppCompatActivity {
     public static final String USERNAME_PREFER = "usernamePref";
     public static final String PASSWORD_PREFER = "passwordPref";
     public static final String EMP_TYPE_PREFER = "empTypePref";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

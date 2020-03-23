@@ -93,7 +93,7 @@ public class TestShow extends AppCompatActivity {
 
 
     }
-    class Person {
+    public static class Person {
         public String Transaction_Of;
         public String Method;
         public String Recived_Transaction;
@@ -116,7 +116,7 @@ public class TestShow extends AppCompatActivity {
         }
     }
 
-    class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonHolder>  {
+    public static class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonHolder>  {
 
         private List<Person> list;
 
@@ -155,7 +155,7 @@ public class TestShow extends AppCompatActivity {
             return list.size();
         }
 
-        class PersonHolder extends RecyclerView.ViewHolder {
+        public static class PersonHolder extends RecyclerView.ViewHolder {
 
             public Person person;
             public TextView Amount;
