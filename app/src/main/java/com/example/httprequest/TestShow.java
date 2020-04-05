@@ -1,5 +1,6 @@
 package com.example.httprequest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -139,7 +140,12 @@ public class TestShow extends AppCompatActivity {
 
             holder.Method.setText(person.Method);
             holder.Date.setText(person.TimeStamp);
-            holder.Amount.setText(person.Money);
+            if(person.Method.equals("ฝากเงิน"))
+            {
+                holder.Amount.setText("+ " + person.Money);
+                holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
+            }
+
 
 
             //holder.checkBox.setChecked(person.isChecked);

@@ -1,6 +1,5 @@
 package com.example.httprequest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private TextView ErrorMsg;
     private EditText txtUsername;
     private EditText txtPassword;
@@ -45,16 +46,16 @@ public class MainActivity extends Activity {
         ErrorMsg.setVisibility(View.INVISIBLE);
 
     }
-//    @Override
-//    protected void onResume() {
-//        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
-//        if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
-//            Intent i = new Intent(this, Transaction.class);
-//            startActivity(i);
-//            finish();
-//        }
-//        super.onResume();
-//    }
+    @Override
+    protected void onResume() {
+        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
+        if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
+            Intent i = new Intent(this, Transaction.class);
+            startActivity(i);
+            finish();
+        }
+        super.onResume();
+    }
 
     public void onSignin(View v)
     {

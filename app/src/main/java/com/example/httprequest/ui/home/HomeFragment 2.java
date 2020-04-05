@@ -2,7 +2,6 @@ package com.example.httprequest.ui.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.httprequest.R;
 import com.example.httprequest.TestShow;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        Log.i("token hello", FirebaseInstanceId.getInstance().getToken());
         Name = root.findViewById(R.id.Name);
         Money = root.findViewById(R.id.showmoney);
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
@@ -99,9 +99,7 @@ public class HomeFragment extends Fragment {
                                             item.getString("chk")));
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setHasFixedSize(true);
                             recyclerView.setAdapter(new TestShow.PersonAdapter(people));
-
                         }
                     }else{
                         Toast.makeText(getContext(), "ไม่สามารถแสดงข้อมูลได้", Toast.LENGTH_LONG).show();
@@ -168,14 +166,11 @@ public class HomeFragment extends Fragment {
             TestShow.Person person = list.get(position);
             holder.person = person;
 
-            Log.d("mylog","xx" + person.Method);
+            //Log.d("mylog","xx" + person.imageFileName);
 
             holder.Method.setText(person.Method);
             holder.Date.setText(person.TimeStamp);
-            holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
-
-
-
+            holder.Amount.setText(person.Money);
 
 
             //holder.checkBox.setChecked(person.isChecked);

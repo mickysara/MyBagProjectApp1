@@ -1,8 +1,5 @@
-package com.example.httprequest.ui.home;
+package com.example.httprequest;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.httprequest.R;
-import com.example.httprequest.TestShow;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -36,37 +28,21 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class HomeFragment extends Fragment {
-    private TextView Money;
+public class TestShow extends AppCompatActivity {
 
-    private HomeViewModel homeViewModel;
     RecyclerView recyclerView;
-    List<TestShow.Person> people;
+    List<Person> people;
     public String IMAGE_URL = "";
-    TextView Name;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+    TextView Hello;
 
 
-        Name = root.findViewById(R.id.Name);
-        Money = root.findViewById(R.id.showmoney);
-        SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-
-
-        String Fname = sp.getString("FNAME","");
-        String Lname = sp.getString("LNAME","");
-        Name.setText(Fname +" "+Lname);
-        String M = sp.getString("Money","");
-
-
-
-        Money.setText("คุณมียอดเงินคงเหลือ"+ M);
-
-        recyclerView = root.findViewById(R.id.recyclerView);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_testshow);
+        Log.d("Statuse","hi");
+        //List data
+        recyclerView = findViewById(R.id.recyclerView);
 
         people = new ArrayList<>();
         RequestParams params = new RequestParams();
@@ -90,7 +66,7 @@ public class HomeFragment extends Fragment {
                             //Log.d("myCat", String.valueOf(i));
                             JSONObject item = data.getJSONObject(i);
                             people.add(
-                                    new TestShow.Person(item.getString("Transaction_Of"),
+                                    new Person(item.getString("Transaction_Of"),
                                             item.getString("Method"),
                                             item.getString("Recived_Transaction"),
                                             item.getString("Money"),
@@ -98,13 +74,11 @@ public class HomeFragment extends Fragment {
                                             item.getString("TimeStamp"),
                                             item.getString("chk")));
 
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setHasFixedSize(true);
-                            recyclerView.setAdapter(new TestShow.PersonAdapter(people));
-
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            recyclerView.setAdapter(new PersonAdapter(people));
                         }
                     }else{
-                        Toast.makeText(getContext(), "ไม่สามารถแสดงข้อมูลได้", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "ไม่สามารถแสดงข้อมูลได้", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,15 +92,8 @@ public class HomeFragment extends Fragment {
         });
 
 
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
-        return root;
     }
-    class Person {
+    public static class Person {
         public String Transaction_Of;
         public String Method;
         public String Recived_Transaction;
@@ -149,33 +116,31 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    class PersonAdapter extends RecyclerView.Adapter<TestShow.PersonAdapter.PersonHolder>  {
+    public static class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonHolder>  {
 
-        private List<TestShow.Person> list;
+        private List<Person> list;
 
-        public PersonAdapter(@NonNull List<TestShow.Person> list) {
+        public PersonAdapter(@NonNull List<Person> list) {
             this.list = list;
         }
 
         @Override
-        public TestShow.PersonAdapter.PersonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public PersonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_person, parent, false);
-            return new TestShow.PersonAdapter.PersonHolder(view);
+            return new PersonHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(TestShow.PersonAdapter.PersonHolder holder, final int position) {
-            TestShow.Person person = list.get(position);
+        public void onBindViewHolder(PersonHolder holder, final int position) {
+            Person person;
+            person = list.get(position);
             holder.person = person;
 
-            Log.d("mylog","xx" + person.Method);
+            //Log.d("mylog","xx" + person.imageFileName);
 
             holder.Method.setText(person.Method);
             holder.Date.setText(person.TimeStamp);
-            holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
-
-
-
+            holder.Amount.setText(person.Money);
 
 
             //holder.checkBox.setChecked(person.isChecked);
@@ -191,9 +156,9 @@ public class HomeFragment extends Fragment {
             return list.size();
         }
 
-        class PersonHolder extends RecyclerView.ViewHolder {
+        public static class PersonHolder extends RecyclerView.ViewHolder {
 
-            public TestShow.Person person;
+            public Person person;
             public TextView Amount;
             public TextView Method;
             public TextView Date;
