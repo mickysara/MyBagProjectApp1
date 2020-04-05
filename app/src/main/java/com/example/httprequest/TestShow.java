@@ -133,7 +133,8 @@ public class TestShow extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(PersonHolder holder, final int position) {
-            Person person = list.get(position);
+            Person person;
+            person = list.get(position);
             holder.person = person;
 
             //Log.d("mylog","xx" + person.imageFileName);

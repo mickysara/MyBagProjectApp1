@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.httprequest.R;
 import com.example.httprequest.TestShow;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -51,7 +52,7 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        Log.i("token hello", FirebaseInstanceId.getInstance().getToken());
         Name = root.findViewById(R.id.Name);
         Money = root.findViewById(R.id.showmoney);
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
