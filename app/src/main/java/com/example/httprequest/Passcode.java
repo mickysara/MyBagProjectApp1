@@ -33,7 +33,9 @@ public class Passcode extends AppCompatActivity {
         if (PIN.equals("")) {
             PasscodeView passcodeView = (PasscodeView) findViewById(R.id.passcodeView);
 
-            passcodeView.setPasscodeLength(4).setSecondInputTip("กรอกรหัส PIN อีกครั้ง").setWrongInputTip("รหัส PIN ไม่ตรงกันกรุณากรอกใหม่").setListener(new PasscodeView.PasscodeViewListener() {
+            passcodeView.setPasscodeLength(4).setSecondInputTip("กรอกรหัส PIN อีกครั้ง")
+                    .setWrongInputTip("รหัส PIN ไม่ตรงกันกรุณากรอกใหม่")
+                    .setCorrectInputTip("รหัส PIN ถูกต้อง").setListener(new PasscodeView.PasscodeViewListener() {
 
 
 
@@ -58,7 +60,9 @@ public class Passcode extends AppCompatActivity {
 
             PasscodeView passcodeView = (PasscodeView) findViewById(R.id.passcodeView);
 
-            passcodeView.setPasscodeLength(4).setFirstInputTip("กรุณากรอก PIN 4 หลัก").setLocalPasscode(PIN).setWrongInputTip("รหัส PIN มือถือไม่ถูกต้อง").setListener(new PasscodeView.PasscodeViewListener() {
+            passcodeView.setFirstInputTip("กรุณากรอก PIN 4 หลัก").setPasscodeLength(4)
+                    .setCorrectInputTip("รหัส PIN ถูกต้อง")
+                    .setLocalPasscode(PIN).setWrongInputTip("รหัส PIN มือถือไม่ถูกต้อง").setListener(new PasscodeView.PasscodeViewListener() {
 
 
 
