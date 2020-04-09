@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
         if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
-            Intent i = new Intent(this, Transaction.class);
+            Intent i = new Intent(this, Passcode.class);
             startActivity(i);
             finish();
         }
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
                     editor.putString("Id_Title", Id_Title);
                     editor.putString("Money", Money);
                     editor.commit();
-                    Intent intent = new Intent(getApplicationContext(), Transaction.class);
+                    Intent intent = new Intent(getApplicationContext(), Passcode.class);
                     startActivity(intent);
 
 
