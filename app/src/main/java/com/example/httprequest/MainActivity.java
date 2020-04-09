@@ -45,16 +45,16 @@ public class MainActivity extends Activity {
         ErrorMsg.setVisibility(View.INVISIBLE);
 
     }
-//    @Override
-//    protected void onResume() {
-//        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
-//        if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
-//            Intent i = new Intent(this, Transaction.class);
-//            startActivity(i);
-//            finish();
-//        }
-//        super.onResume();
-//    }
+    @Override
+    protected void onResume() {
+        sharedPrefer=getSharedPreferences(APP_PREFER, Context.MODE_PRIVATE);
+        if ((sharedPrefer.contains("FNAME")) && sharedPrefer.contains("LNAME")){
+            Intent i = new Intent(this, Transaction.class);
+            startActivity(i);
+            finish();
+        }
+        super.onResume();
+    }
 
     public void onSignin(View v)
     {

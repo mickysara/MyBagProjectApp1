@@ -2,7 +2,6 @@ package com.example.httprequest.ui.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,9 +99,7 @@ public class HomeFragment extends Fragment {
                                             item.getString("chk")));
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setHasFixedSize(true);
                             recyclerView.setAdapter(new TestShow.PersonAdapter(people));
-
                         }
                     }else{
                         Toast.makeText(getContext(), "ไม่สามารถแสดงข้อมูลได้", Toast.LENGTH_LONG).show();
@@ -169,14 +166,11 @@ public class HomeFragment extends Fragment {
             TestShow.Person person = list.get(position);
             holder.person = person;
 
-            Log.d("mylog","xx" + person.Method);
+            //Log.d("mylog","xx" + person.imageFileName);
 
             holder.Method.setText(person.Method);
             holder.Date.setText(person.TimeStamp);
-            holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
-
-
-
+            holder.Amount.setText(person.Money);
 
 
             //holder.checkBox.setChecked(person.isChecked);
@@ -224,4 +218,5 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 }
