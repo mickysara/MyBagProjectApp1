@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.android.support:support-v4:29.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.3'
-
+    implementation 'com.hanks:passcodeview:0.1.2'
+    implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
 
 }

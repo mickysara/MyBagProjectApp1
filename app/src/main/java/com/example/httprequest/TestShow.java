@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -136,15 +137,71 @@ public class TestShow extends AppCompatActivity {
             Person person;
             person = list.get(position);
             holder.person = person;
+            StringTokenizer tokens = new StringTokenizer(person.TimeStamp, "-");
+            String year = tokens.nextToken();// this will contain "Fruit"
+            String month = tokens.nextToken();
+            String last = tokens.nextToken();
+
+            StringTokenizer getday = new StringTokenizer(last," ");
+            String day = getday.nextToken();
+            String Time = getday.nextToken();
+
+            int years = Integer.parseInt(year) + 543;
+
+            if(month.equals("01"))
+            {
+                month = "ม.ค.";
+            }else if(month.equals("02"))
+            {
+                month = "ก.พ.";
+            }else if(month.equals("03"))
+            {
+                month = "มี.ค.";
+            }else if(month.equals("04"))
+            {
+                month = "เม.ย.";
+            }
+            else if(month.equals("05"))
+            {
+                month = "พ.ค.";
+            }else if(month.equals("06"))
+            {
+                month = "มิ.ย.";
+            }else if(month.equals("07"))
+            {
+                month = "ก.ค.";
+            }else if(month.equals("08"))
+            {
+                month = "ส.ค.";
+            }else if(month.equals("09"))
+            {
+                month = "ก.ย.";
+            }else if(month.equals("10"))
+            {
+                month = "ต.ค.";
+            }else if(month.equals("11"))
+            {
+                month = "พ.ย.";
+            }else if(month.equals("12"))
+            {
+                month = "ธ.ค.";
+            }
 
             //Log.d("mylog","xx" + person.imageFileName);
-
+            holder.Date.setText(day + " " + month + " " + years + " เวลา " +Time);
             holder.Method.setText(person.Method);
-            holder.Date.setText(person.TimeStamp);
+
             if(person.Method.equals("ฝากเงิน"))
             {
                 holder.Amount.setText("+ " + person.Money);
                 holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
+
+            }else if(person.Method.equals("โอนเงิน"))
+            {
+                holder.Transac.setText("เลขที่บัญชีที่ปลายทาง: " + person.Recived_Transaction);
+                holder.Transac.setTextColor(Color.parseColor("#000000"));
+                holder.Amount.setText("- " + person.Money);
+                holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
             }
 
 

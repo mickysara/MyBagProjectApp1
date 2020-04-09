@@ -2,6 +2,7 @@ package com.example.httprequest.ui.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -164,6 +165,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onBindViewHolder(TestShow.PersonAdapter.PersonHolder holder, final int position) {
             TestShow.Person person = list.get(position);
+
             holder.person = person;
 
             //Log.d("mylog","xx" + person.imageFileName);
@@ -171,7 +173,6 @@ public class HomeFragment extends Fragment {
             holder.Method.setText(person.Method);
             holder.Date.setText(person.TimeStamp);
             holder.Amount.setText(person.Money);
-
 
             //holder.checkBox.setChecked(person.isChecked);
             //holder.textView.setText(String.format("%d %s(%d)", position, person.firstName, person.age));
