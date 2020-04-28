@@ -189,19 +189,28 @@ public class TestShow extends AppCompatActivity {
 
             //Log.d("mylog","xx" + person.imageFileName);
             holder.Date.setText(day + " " + month + " " + years + " เวลา " +Time);
-            holder.Method.setText(person.Method);
+
 
             if(person.Method.equals("ฝากเงิน"))
             {
+                holder.Method.setText(person.Method);
                 holder.Amount.setText("+ " + person.Money);
                 holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
 
-            }else if(person.Method.equals("โอนเงิน"))
+            }else if(person.Method.equals("โอนเงิน") && person.chk.equals("x"))
             {
+                holder.Method.setText(person.Method);
                 holder.Transac.setText("เลขที่บัญชีที่ปลายทาง: " + person.Recived_Transaction);
                 holder.Transac.setTextColor(Color.parseColor("#000000"));
                 holder.Amount.setText("- " + person.Money);
                 holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
+            }else if(person.Method.equals("โอนเงิน") && person.chk.equals("y"))
+            {
+                holder.Method.setText("รับเงินโอน");
+                holder.Transac.setText("เลขที่บัญชีที่โอนเงิน: " + person.Recived_Transaction);
+                holder.Transac.setTextColor(Color.parseColor("#000000"));
+                holder.Amount.setText("+ " + person.Money);
+                holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
             }
 
 

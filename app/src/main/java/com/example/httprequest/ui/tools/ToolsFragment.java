@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.httprequest.AwesomeDialogFragment;
 import com.example.httprequest.R;
 import com.example.httprequest.TranferQR;
 import com.example.httprequest.Transaction;
@@ -52,7 +53,7 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
     protected TextView longitudeText;
     protected TextView latitudeText;
     protected Location lastLocation;
-
+    private static String TAG_DIALOG = "dialog";
     private Button scan_btn;
     private FusedLocationProviderClient fusedLocationProviderClient;
     public String La="100";
@@ -211,15 +212,28 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                 }
                                                 if(status.equals("NotinActivities"))
                                                 {
-                                                    Toast.makeText(getContext(), "ไม่มีสิทธิ์"+Iduser, Toast.LENGTH_LONG).show();
+                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
+                                                            .setMessage(R.string.Not_In_Activities)
+                                                            .setNegative(R.string.cancel)
+                                                            .setPosition(R.string.ok)
+                                                            .build();;
+                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
                                                 }else if(status.equals("NotinDate"))
                                                 {
-                                                    Toast.makeText(getContext(), "ไม่ได้อยู่ในวันนั้น", Toast.LENGTH_LONG).show();
-                                                    Log.d("hello","Success");
-
+                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
+                                                            .setMessage(R.string.Not_In_Date)
+                                                            .setNegative(R.string.cancel)
+                                                            .setPosition(R.string.ok)
+                                                            .build();
+                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
                                                 }else if(status.equals("NotinArea"))
                                                 {
-                                                    Toast.makeText(getContext(), "ไม่ได้อยู่ในพื้นที่", Toast.LENGTH_LONG).show();
+                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
+                                                            .setMessage(R.string.Not_In_Area)
+                                                            .setNegative(R.string.cancel)
+                                                            .setPosition(R.string.ok)
+                                                            .build();
+                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
                                                     Log.d("hello","Success");
                                                 }
                                                 else

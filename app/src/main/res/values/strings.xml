@@ -18,7 +18,10 @@
 
     <string name="ok">ตกลง</string>
     <string name="cancel">ยกเลิก</string>
-    <string name="sample_dialog_message">ระบบไม่พบเลขบัญชีที่คุณกรอก กรุณากรอกใหม่อีกครั้ง</string>
-    <string name="sample_dialog_confirm">Android challenge accepted</string>
+    <string name="sample_dialog_message">ระบบไม่พบเลขบัญชีที่คุณกรอก\nกรุณากรอกใหม่อีกครั้ง</string>
+    <string name="Notmoney">เงินในบัญชีของคุณไม่เพียงพอ\nกรุณากรอกใหม่อีกครั้ง</string>
+    <string name="Not_In_Area">คุณไม่ได้อยู่ภายในพื้นที่กิจกรรม\nกรุณาไปยังพื้นที่กิจกรรมและแสกนอีกครั้ง</string>
+    <string name="Not_In_Activities">คุณไม่ได้มีรายชื่อภายในกิจกรรม\nจึงทำให้คุณไม่สามารถลงชื่อเข้าร่วมได้</string>
+    <string name="Not_In_Date">ยังไม่ถึงวันที่หรือเวลาที่จัดกิจกรรม\nกรุณารอเมื่อถึงวันหรือหรือเวลากิจกรรมและ แสกนอีกครัง</string>
     <string name="sample_dialog_cancel">Cancelled</string>
 </resources>

@@ -1,11 +1,13 @@
 package com.example.httprequest.ui.share;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -26,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -50,6 +53,7 @@ import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 
 public class ShareFragment extends Fragment {
@@ -81,11 +85,18 @@ public class ShareFragment extends Fragment {
         Submit = root.findViewById(R.id.button2);
         imgPreview = root.findViewById(R.id.imageView);
         txtDate.setOnClickListener(view -> {
-             Calendar c = Calendar.getInstance();
+            Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions((Activity) getContext(), new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+                return;
+            }
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                     new DatePickerDialog.OnDateSetListener() {
@@ -165,8 +176,8 @@ public class ShareFragment extends Fragment {
         });
 
         txtTime.setOnClickListener(view -> {
-        // Get Current Time
-             Calendar c = Calendar.getInstance();
+            // Get Current Time
+            Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
 
@@ -217,58 +228,58 @@ public class ShareFragment extends Fragment {
 //                Toast.makeText(getContext(), "กรุณากรอกข้อมูลให้ครบครับ", Toast.LENGTH_LONG).show();
 //            }else
 //            {
-                SharedPreferences sp = getContext().getSharedPreferences("USER", Context.MODE_PRIVATE);
-                String Iduser = sp.getString("Id_Users","");
-                RequestParams params = new RequestParams();
-                params.put("Money", Money.getText().toString());
-                params.put("Date", txtDate.getText().toString());
-                params.put("Time", txtTime.getText().toString());
-                    File photo = new File(imageFilePath);
+            SharedPreferences sp = getContext().getSharedPreferences("USER", Context.MODE_PRIVATE);
+            String Iduser = sp.getString("Id_Users","");
+            RequestParams params = new RequestParams();
+            params.put("Money", Money.getText().toString());
+            params.put("Date", txtDate.getText().toString());
+            params.put("Time", txtTime.getText().toString());
+            File photo = new File(imageFilePath);
+            try {
+                params.put("Image", photo);
+            } catch(FileNotFoundException e) {}
+
+
+            Log.d("Test",photo.toString());
+
+            params.put("User", Iduser);
+
+            AsyncHttpClient http = new AsyncHttpClient();
+            http.post("https://www.harmonicmix.xyz/api/UploadMoney_api", params, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
+                    JSONObject obj = null;
                     try {
-                        params.put("Image", photo);
-                    } catch(FileNotFoundException e) {}
+                        obj = new JSONObject(response.toString());
 
 
-                Log.d("Test",photo.toString());
-
-                params.put("User", Iduser);
-
-                AsyncHttpClient http = new AsyncHttpClient();
-                http.post("https://www.harmonicmix.xyz/api/UploadMoney_api", params, new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
-                        JSONObject obj = null;
-                        try {
-                            obj = new JSONObject(response.toString());
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        String status = null;
-                        try {
-                            status = (String) obj.get("status");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if(status.equals("Success"))
-                        {
-                            Toast.makeText(getContext(), "สำเร็จ", Toast.LENGTH_LONG).show();
-                            Log.d("hello",response.toString());
-                        }else
-                        {
-                            Toast.makeText(getContext(), "ไม่สำเร็จ", Toast.LENGTH_LONG).show();
-                            Log.d("hello",response.toString());
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                    String status = null;
+                    try {
+                        status = (String) obj.get("status");
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
-                        Log.d("onFailure", Integer.toString(statusCode));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                    if(status.equals("Success"))
+                    {
+                        Toast.makeText(getContext(), "สำเร็จ", Toast.LENGTH_LONG).show();
+                        Log.d("hello",response.toString());
+                    }else
+                    {
+                        Toast.makeText(getContext(), "ไม่สำเร็จ", Toast.LENGTH_LONG).show();
+                        Log.d("hello",response.toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("onFailure", Integer.toString(statusCode));
+                }
+            });
 //            }
         });
 

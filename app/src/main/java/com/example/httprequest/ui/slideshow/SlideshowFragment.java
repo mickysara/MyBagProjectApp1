@@ -2,7 +2,10 @@ package com.example.httprequest.ui.slideshow;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,10 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import cz.msebera.android.httpclient.Header;
 
 public class SlideshowFragment extends Fragment {
@@ -32,6 +39,7 @@ public class SlideshowFragment extends Fragment {
     private SlideshowViewModel slideshowViewModel;
     private EditText Money;
     private EditText Id_Users;
+    String MM;
     String IdLogin;
     private static String TAG_DIALOG = "dialog";
 
@@ -46,14 +54,15 @@ public class SlideshowFragment extends Fragment {
         SharedPreferences sp = this.getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
         IdLogin = sp.getString("Username","");
 
+        Money.addTextChangedListener(onTextChangedListener());
         final View button = root.findViewById(R.id.button);
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String Id = Id_Users.getText().toString();
-                        String money = Money.getText().toString();
-
+                        String money = Money.getText().toString().replaceAll(",", "");
+                        Log.d("Money", Money.getText().toString().replaceAll(",", ""));
                         RequestParams params = new RequestParams();
                         params.put("Id", Id);
                         params.put("Money", money);
@@ -88,13 +97,21 @@ public class SlideshowFragment extends Fragment {
                                             .setPosition(R.string.ok)
                                             .build();
                                     fragment.show(getChildFragmentManager(), TAG_DIALOG);
-
-                                    Toast.makeText(getActivity(), "ไม่เจอคน", Toast.LENGTH_LONG).show();
+                                    Id_Users.requestFocus();
+                                    Id_Users.getBackground().mutate().setColorFilter(getResources().getColor(R.color.soft_red), PorterDuff.Mode.SRC_ATOP);
                                     Log.d("hello","Not users");
                                 }else if(status.equals("NotMoney"))
                                 {
-                                    Toast.makeText(getActivity(), "โอนเงินเรียบร้อย่", Toast.LENGTH_LONG).show();
-                                    Log.d("hello","Success");
+                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
+                                            .setMessage(R.string.Notmoney)
+                                            .setNegative(R.string.cancel)
+                                            .setPosition(R.string.ok)
+                                            .build();
+                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
+                                    Money.requestFocus();
+                                    Money.getBackground().mutate().setColorFilter(getResources().getColor(R.color.soft_red), PorterDuff.Mode.SRC_ATOP);
+
+                                    Log.d("hello","เงินไม่พอ");
                                 }
                                 else
                                 {
@@ -113,5 +130,45 @@ public class SlideshowFragment extends Fragment {
                 }
         );
         return root;
+    }
+    private TextWatcher onTextChangedListener() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Money.removeTextChangedListener(this);
+
+                try {
+                    String originalString = s.toString();
+
+                    Long longval;
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replaceAll(",", "");
+                    }
+                    longval = Long.parseLong(originalString);
+
+                    DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                    formatter.applyPattern("#,###,###,###");
+                    String formattedString = formatter.format(longval);
+
+                    //setting text after format to EditText
+                    Money.setText(formattedString);
+                    Money.setSelection(Money.getText().length());
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+
+                Money.addTextChangedListener(this);
+            }
+        };
     }
 }

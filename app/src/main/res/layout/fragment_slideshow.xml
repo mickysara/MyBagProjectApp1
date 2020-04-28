@@ -96,6 +96,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="56dp"
         android:background="@color/natural_green"
+        android:fontFamily="@font/athiti"
         android:onClick="onClick"
         android:text="ตกลง"
         android:textColor="@color/angel_white"
