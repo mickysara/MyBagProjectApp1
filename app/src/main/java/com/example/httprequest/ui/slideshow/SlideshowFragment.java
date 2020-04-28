@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.httprequest.AwesomeDialogFragment;
 import com.example.httprequest.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -31,6 +33,7 @@ public class SlideshowFragment extends Fragment {
     private EditText Money;
     private EditText Id_Users;
     String IdLogin;
+    private static String TAG_DIALOG = "dialog";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +81,14 @@ public class SlideshowFragment extends Fragment {
                                 }
                                 if(status.equals("DontHave"))
                                 {
+
+                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
+                                            .setMessage(R.string.sample_dialog_message)
+                                            .setNegative(R.string.cancel)
+                                            .setPosition(R.string.ok)
+                                            .build();
+                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
+
                                     Toast.makeText(getActivity(), "ไม่เจอคน", Toast.LENGTH_LONG).show();
                                     Log.d("hello","Not users");
                                 }else if(status.equals("NotMoney"))

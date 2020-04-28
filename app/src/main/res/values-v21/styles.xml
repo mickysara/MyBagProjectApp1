@@ -4,5 +4,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:textColorHint">@color/angel_white</item>
+        <item name="colorControlActivated">@color/natural_green</item>  //black color
     </style>
 </resources>

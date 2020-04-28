@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/black_bg"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -150,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="#00000000"
+                    android:fontFamily="@font/athiti_semibold"
                     android:text="เวลาที่ทำการโอน"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"

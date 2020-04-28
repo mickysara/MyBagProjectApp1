@@ -14,4 +14,11 @@
     <string name="menu_tools">สแกน QR Code</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+
+    <string name="ok">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="sample_dialog_message">ระบบไม่พบเลขบัญชีที่คุณกรอก กรุณากรอกใหม่อีกครั้ง</string>
+    <string name="sample_dialog_confirm">Android challenge accepted</string>
+    <string name="sample_dialog_cancel">Cancelled</string>
 </resources>
