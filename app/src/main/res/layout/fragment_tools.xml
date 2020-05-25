@@ -27,6 +27,7 @@
         android:layout_centerInParent="true"
         android:background="@color/natural_green"
         android:fontFamily="@font/athiti"
+        android:textColor="@color/angel_white"
         android:text="QR Scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
         android:text="TextView"
+        android:textColor="@color/angel_white"
         app:layout_constraintBottom_toTopOf="@+id/Longtitude"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="@color/angel_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="198dp" />

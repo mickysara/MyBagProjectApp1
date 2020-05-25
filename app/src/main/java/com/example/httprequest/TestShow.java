@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -194,7 +195,9 @@ public class TestShow extends AppCompatActivity {
             if(person.Method.equals("ฝากเงิน"))
             {
                 holder.Method.setText(person.Method);
-                holder.Amount.setText("+ " + person.Money);
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String yourFormattedString = formatter.format(Integer.parseInt(person.Money));
+                holder.Amount.setText("+ " + yourFormattedString + " บาท");
                 holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
 
             }else if(person.Method.equals("โอนเงิน") && person.chk.equals("x"))
@@ -202,15 +205,27 @@ public class TestShow extends AppCompatActivity {
                 holder.Method.setText(person.Method);
                 holder.Transac.setText("เลขที่บัญชีที่ปลายทาง: " + person.Recived_Transaction);
                 holder.Transac.setTextColor(Color.parseColor("#000000"));
-                holder.Amount.setText("- " + person.Money);
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String yourFormattedString = formatter.format(Integer.parseInt(person.Money));
+                holder.Amount.setText("- " + yourFormattedString + " บาท");
                 holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
             }else if(person.Method.equals("โอนเงิน") && person.chk.equals("y"))
             {
                 holder.Method.setText("รับเงินโอน");
-                holder.Transac.setText("เลขที่บัญชีที่โอนเงิน: " + person.Recived_Transaction);
+                holder.Transac.setText("เลขที่บัญชีที่โอนเงิน: " + person.Transaction_Of);
                 holder.Transac.setTextColor(Color.parseColor("#000000"));
-                holder.Amount.setText("+ " + person.Money);
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String yourFormattedString = formatter.format(Integer.parseInt(person.Money));
+                holder.Amount.setText("+ " + yourFormattedString+ " บาท");
                 holder.Amount.setTextColor(Color.parseColor("#3cab7a"));
+            }
+            else if(person.Method.equals("ถอนเงิน"))
+            {
+                holder.Method.setText("ถอนเงิน");
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String yourFormattedString = formatter.format(Integer.parseInt(person.Money));
+                holder.Amount.setText("- " + yourFormattedString + " บาท");
+                holder.Amount.setTextColor(Color.parseColor("#ef4c43"));
             }
 
 

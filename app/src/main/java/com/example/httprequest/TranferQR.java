@@ -1,6 +1,8 @@
 package com.example.httprequest;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -98,13 +100,38 @@ public class TranferQR extends AppCompatActivity {
                     Log.d("hello","Not users");
                 }else if(status.equals("NotMoney"))
                 {
-                    Toast.makeText(getApplicationContext(), "โอนเงินเรียบร้อย่", Toast.LENGTH_LONG).show();
-                    Log.d("hello","Success");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TranferQR.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("แจ้งเตือน");
+                    builder.setMessage("เงินของคุณไม่เพียงพอสำหรับการโอนกรุณาแก้ไขและลองใหม่อีกครั้ง");
+                    builder.setPositiveButton("ตกลง",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();;
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "โอนเงินเรียบร้อย่", Toast.LENGTH_LONG).show();
-                    Log.d("hello","Success");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TranferQR.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("แจ้งเตือน");
+                    builder.setMessage("ระบบได้ทำการโอนเงินเรียบร้อย");
+                    builder.setPositiveButton("ตกลง",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), Transaction.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();;
                 }
             }
 

@@ -2,7 +2,9 @@ package com.example.httprequest.ui.tools;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.httprequest.AwesomeDialogFragment;
+import com.example.httprequest.Passcode;
 import com.example.httprequest.R;
 import com.example.httprequest.TranferQR;
 import com.example.httprequest.Transaction;
@@ -36,6 +39,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -184,15 +188,16 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
 
                                     if(Type.equals("Activity"))
                                     {
-
-
+                                        Log.d("Long",Long);
+                                        Log.d("Long",id);
+                                        Log.d("Long",Iduser);
                                         RequestParams params = new RequestParams();
                                         params.put("IdAc",id );
                                         params.put("IdUser", Iduser);
-                                        params.put("Latitude",La);
-                                        params.put("Longtitude",Long);
+                                        params.put("Latitude",Long);
+                                        params.put("Longtitude",La);
                                         AsyncHttpClient http = new AsyncHttpClient();
-                                        http.post("https://www.harmonicmix.xyz/api/JoinActivity_api", params, new JsonHttpResponseHandler(){
+                                        http.post("https://www.harmonicmix.xyz/api/GetActivity_api", params, new JsonHttpResponseHandler(){
                                             @Override
                                             public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
                                                 JSONObject obj = null;
@@ -204,55 +209,162 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                     e.printStackTrace();
                                                 }
                                                 String status = null;
+                                                String Nameac = null;
                                                 try {
                                                     status = (String) obj.get("status");
-
+                                                    Nameac = (String) obj.get("Name");
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
                                                 if(status.equals("NotinActivities"))
                                                 {
-                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
-                                                            .setMessage(R.string.Not_In_Activities)
-                                                            .setNegative(R.string.cancel)
-                                                            .setPosition(R.string.ok)
-                                                            .build();;
-                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("คุณไม่สามารถลงทะเบียนเข้าร่วมกิจกรรมนี้ได้เนื่องจากคุณไม่มีรายชื่ออยู่ในกิจกรรม: " + Nameac);
+                                                    builder.setPositiveButton("ตกลง",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Log.d("Dialog","con");
+                                                                }
+                                                            });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                 }else if(status.equals("NotinDate"))
                                                 {
-                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
-                                                            .setMessage(R.string.Not_In_Date)
-                                                            .setNegative(R.string.cancel)
-                                                            .setPosition(R.string.ok)
-                                                            .build();
-                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("ขณะนี้ไม่ใช่เวลาในการจัดกิจกรรมกรุณาแสกนในเวลากิจกรรม: " + Nameac);
+                                                    builder.setPositiveButton("ตกลง",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Log.d("Dialog","con");
+                                                                }
+                                                            });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+
                                                 }else if(status.equals("NotinArea"))
                                                 {
-                                                    AwesomeDialogFragment fragment = new AwesomeDialogFragment.Builder()
-                                                            .setMessage(R.string.Not_In_Area)
-                                                            .setNegative(R.string.cancel)
-                                                            .setPosition(R.string.ok)
-                                                            .build();
-                                                    fragment.show(getChildFragmentManager(), TAG_DIALOG);
-                                                    Log.d("hello","Success");
+                                                    Log.d("onSuccess", response.toString());
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("คุณไม่ได้อยู่ในบริเวณที่จัดกิจกรรมกรุณาไปยังบริเวณจัดกิจกรรม: " + Nameac + " และแสกนอีกรอบ");
+                                                    builder.setPositiveButton("ตกลง",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Log.d("Dialog","con");
+                                                                }
+                                                            });
+                                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                        }
+                                                    });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+                                                }else if(status.equals("AlreadyJoin"))
+                                                {
+                                                    Log.d("onSuccess", response.toString());
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("คุณได้ทำการเข้าร่วมกิจกรรม: " + Nameac + "ในวันนี้แล้ว");
+                                                    builder.setPositiveButton("Confirm",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Log.d("Dialog","con");
+                                                                }
+                                                            });
+                                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                        }
+                                                    });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                 }
                                                 else
                                                 {
-                                                    Toast.makeText(getContext(), "บันทึกกิจกรรม", Toast.LENGTH_LONG).show();
-                                                    Log.d("hello","Success");
-                                                    /*
-                                                    Fragment newFragment = new HomeFragment();
-                                                    // consider using Java coding conventions (upper first char class names!!!)
-                                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                                    // Replace whatever is in the fragment_container view with this fragment,
-                                                    // and add the transaction to the back stack
-                                                    transaction.replace(R.id.child_fragment, newFragment);
-                                                    transaction.addToBackStack(null);
-                                                    // Commit the transaction
-                                                    transaction.commit();*/
-                                                    Intent i = new Intent(getContext(), Transaction.class);
-                                                    i.putExtra("test",1);
-                                                    startActivity(i);
+                                                    Log.d("onSuccess", response.toString());
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("คุณต้องการจะเข้าร่วมกิจกรรม\n"+"ชื่อ :" + Nameac+"\nตกลงหรือไม่");
+                                                    builder.setPositiveButton("ตกลง",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    RequestParams params = new RequestParams();
+                                                                    params.put("IdAc",id );
+                                                                    params.put("IdUser", Iduser);
+
+                                                                    AsyncHttpClient http = new AsyncHttpClient();
+                                                                    http.post("https://www.harmonicmix.xyz/api/JoinActivity_api", params, new JsonHttpResponseHandler(){
+                                                                        @Override
+                                                                        public void onSuccess(int statusCode, Header[] headers, JSONObject response ) {
+                                                                            JSONObject obj = null;
+                                                                            try {
+                                                                                obj = new JSONObject(response.toString());
+
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                            String status = null;
+                                                                            String Test = null;
+                                                                            try {
+                                                                                status = (String) obj.get("status");
+                                                                                Test = (String) obj.get("Test");
+
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                            if(status.equals("Record"))
+                                                                            {
+                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                                                builder.setCancelable(true);
+                                                                                builder.setTitle("แจ้งเตือน");
+                                                                                builder.setMessage(R.string.Record);
+                                                                                builder.setPositiveButton("ตกลง",
+                                                                                        new DialogInterface.OnClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                                Log.d("Dialog","con");
+                                                                                            }
+                                                                                        });
+
+                                                                                AlertDialog dialog = builder.create();
+                                                                                dialog.show();
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                                                            super.onFailure(statusCode, headers, responseString, throwable);
+                                                                            Log.d("onFailure", Integer.toString(statusCode));
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
+                                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+
+                                                        }
+                                                    });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                 }
                                             }
 
@@ -326,5 +438,4 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
 }

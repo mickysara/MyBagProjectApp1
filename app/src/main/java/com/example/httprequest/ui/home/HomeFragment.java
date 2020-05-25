@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,9 +25,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.httprequest.AwesomeDialogFragment;
+import com.example.httprequest.MainActivity;
 import com.example.httprequest.Passcode;
 import com.example.httprequest.R;
 import com.example.httprequest.TestShow;
+import com.example.httprequest.ui.ShowQr;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -112,6 +116,7 @@ public class HomeFragment extends Fragment {
         String Lname = sp.getString("LNAME","");
         Name.setText(Fname +" "+Lname);
         String M = sp.getString("Money","");
+
         recyclerView = root.findViewById(R.id.recyclerView);
 
         people = new ArrayList<>();
@@ -159,6 +164,26 @@ public class HomeFragment extends Fragment {
                 Log.d("onFailure", Integer.toString(statusCode));
             }
         });
+
+        final View button = root.findViewById(R.id.Showqr);
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), ShowQr.class);
+                        startActivity(intent);
+//                        SharedPreferences.Editor editor = sp.edit();
+//                        editor.clear();
+//                        editor.apply();
+//
+//                        Intent intent = new Intent(getContext(), MainActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(intent);
+//                        getActivity().finish();
+                    }
+                }
+        );
 
 
         homeViewModel.getText().observe(this, new Observer<String>() {

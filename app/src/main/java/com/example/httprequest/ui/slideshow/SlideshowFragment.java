@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.httprequest.AwesomeDialogFragment;
@@ -55,7 +54,7 @@ public class SlideshowFragment extends Fragment {
         IdLogin = sp.getString("Username","");
 
         Money.addTextChangedListener(onTextChangedListener());
-        final View button = root.findViewById(R.id.button);
+        final View button = root.findViewById(R.id.Showqr);
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
