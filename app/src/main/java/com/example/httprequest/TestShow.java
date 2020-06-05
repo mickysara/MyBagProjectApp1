@@ -258,7 +258,7 @@ public class TestShow extends AppCompatActivity {
 
                 Amount = itemView.findViewById(R.id.amount);
                 Method = itemView.findViewById(R.id.Method);
-                Date = itemView.findViewById(R.id.Date);
+                Date = itemView.findViewById(R.id.Detail);
                 Transac = itemView.findViewById(R.id.Transac);
 
 

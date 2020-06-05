@@ -3,8 +3,6 @@ package com.example.httprequest.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,9 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.httprequest.AwesomeDialogFragment;
 import com.example.httprequest.MainActivity;
-import com.example.httprequest.Passcode;
 import com.example.httprequest.R;
 import com.example.httprequest.TestShow;
 import com.example.httprequest.ui.ShowQr;
@@ -170,17 +166,17 @@ public class HomeFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), ShowQr.class);
-                        startActivity(intent);
-//                        SharedPreferences.Editor editor = sp.edit();
-//                        editor.clear();
-//                        editor.apply();
-//
-//                        Intent intent = new Intent(getContext(), MainActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        Intent intent = new Intent(getContext(), ShowQr.class);
 //                        startActivity(intent);
-//                        getActivity().finish();
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();
+                        editor.apply();
+
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 }
         );
@@ -273,7 +269,7 @@ public class HomeFragment extends Fragment {
 
                 Amount = itemView.findViewById(R.id.amount);
                 Method = itemView.findViewById(R.id.Method);
-                Date = itemView.findViewById(R.id.Date);
+                Date = itemView.findViewById(R.id.Detail);
                 Transac = itemView.findViewById(R.id.Transac);
 
 

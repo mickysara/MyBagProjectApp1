@@ -104,8 +104,8 @@
                     app:layout_constraintHorizontal_bias="0.461"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6"
-                    app:srcCompat="@color/colorAccent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+                    tools:srcCompat="@drawable/ic_camera_alt_black_24dp" />
 
                 <Button
                     android:id="@+id/Gally"
@@ -116,6 +116,8 @@
                     android:layout_marginRight="80dp"
                     android:fontFamily="@font/athiti"
                     android:text="เลือกรูปภาพ"
+                    android:background="@color/funny_dark_pink"
+                    android:textColor="@color/angel_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -143,6 +145,8 @@
                     android:layout_marginRight="24dp"
                     android:fontFamily="@font/athiti"
                     android:text="ถ่ายภาพ"
+                    android:background="@color/sky_light_blue"
+                    android:textColor="@color/angel_white"
                     app:layout_constraintEnd_toStartOf="@+id/Gally"
                     app:layout_constraintHorizontal_bias="0.573"
                     app:layout_constraintStart_toStartOf="parent"
@@ -158,6 +162,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/natural_green"
+                    android:textColor="@color/angel_white"
                     app:layout_constraintTop_toBottomOf="@+id/Gally" />
 
                 <TextView

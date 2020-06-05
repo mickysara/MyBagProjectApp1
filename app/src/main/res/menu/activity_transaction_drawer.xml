@@ -33,7 +33,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:title="รายการแจ้งโอนเงินของฉัน" />
         </menu>
     </item>
 

@@ -2,12 +2,16 @@ package com.example.httprequest.ui.share;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -34,6 +38,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.httprequest.BuildConfig;
+import com.example.httprequest.ImageFilePath;
 import com.example.httprequest.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -58,6 +63,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ShareFragment extends Fragment {
 
+    private ProgressDialog progressDialog;
     private ShareViewModel shareViewModel;
     Button Camera, Gallerry,Submit;
     EditText txtDate, txtTime;
@@ -222,12 +228,28 @@ public class ShareFragment extends Fragment {
         });
 
         Submit.setOnClickListener(view ->{
-//            if(Money.getText().toString().equals("") || txtDate.getText().toString().equals("") || txtTime.getText().toString().equals("")
-//                    || imageFilePath.equals(""))
-//            {
-//                Toast.makeText(getContext(), "กรุณากรอกข้อมูลให้ครบครับ", Toast.LENGTH_LONG).show();
-//            }else
-//            {
+            if(Money.getText().toString().equals("") || txtDate.getText().toString().equals("") || txtTime.getText().toString().equals("")
+                    || imageFilePath.equals(""))
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle("แจ้งเตือน");
+                builder.setMessage("กรุณากรอกข้อมูลให้ครบถ้วน");
+                builder.setPositiveButton("ตกลง",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Dialog","con");
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else
+            {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("แจ้งเตือน");
+            progressDialog.setMessage("กำลังอัปโหลดรูปภาพกรุณารอสักครู่...");
+            progressDialog.show();
             SharedPreferences sp = getContext().getSharedPreferences("USER", Context.MODE_PRIVATE);
             String Iduser = sp.getString("Id_Users","");
             RequestParams params = new RequestParams();
@@ -267,11 +289,13 @@ public class ShareFragment extends Fragment {
                     {
                         Toast.makeText(getContext(), "สำเร็จ", Toast.LENGTH_LONG).show();
                         Log.d("hello",response.toString());
+
                     }else
                     {
                         Toast.makeText(getContext(), "ไม่สำเร็จ", Toast.LENGTH_LONG).show();
                         Log.d("hello",response.toString());
                     }
+                    progressDialog.dismiss();
                 }
 
                 @Override
@@ -280,7 +304,7 @@ public class ShareFragment extends Fragment {
                     Log.d("onFailure", Integer.toString(statusCode));
                 }
             });
-//            }
+          }
         });
 
         return root;
@@ -340,9 +364,14 @@ public class ShareFragment extends Fragment {
             Uri contentURI = data.getData();
             Bitmap bitmap = null;
             try {
+                imageFilePath = ImageFilePath.getPath(getContext(), data.getData());
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), contentURI);
                 imgPreview.setImageBitmap(bitmap);//Preview image
                 imgPreview.setImageURI(contentURI);
+
+                Log.d("helloo",imageFilePath);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -277,19 +277,14 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                                                     builder.setCancelable(true);
                                                     builder.setTitle("แจ้งเตือน");
-                                                    builder.setMessage("คุณได้ทำการเข้าร่วมกิจกรรม: " + Nameac + "ในวันนี้แล้ว");
-                                                    builder.setPositiveButton("Confirm",
+                                                    builder.setMessage("คุณได้ทำการเข้าร่วมกิจกรรมในวันนี้แล้วไม่สามารถเข้าร่วมได้อีก");
+                                                    builder.setPositiveButton("ตกลง",
                                                             new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int which) {
                                                                     Log.d("Dialog","con");
                                                                 }
                                                             });
-                                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                        }
-                                                    });
 
                                                     AlertDialog dialog = builder.create();
                                                     dialog.show();
