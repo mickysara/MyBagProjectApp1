@@ -249,6 +249,23 @@ public class ToolsFragment extends Fragment implements GoogleApiClient.Connectio
                                                     AlertDialog dialog = builder.create();
                                                     dialog.show();
 
+                                                }else if(status.equals("Cant Join"))
+                                                {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("แจ้งเตือน");
+                                                    builder.setMessage("สถานะของคุณไม่สามารถเข้าร่วมกิจกรรม: " + Nameac);
+                                                    builder.setPositiveButton("ตกลง",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    Log.d("Dialog","con");
+                                                                }
+                                                            });
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+
                                                 }else if(status.equals("NotinArea"))
                                                 {
                                                     Log.d("onSuccess", response.toString());
