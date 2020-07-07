@@ -10,7 +10,7 @@
 
     <string name="menu_home">หน้าหลัก</string>
     <string name="menu_gallery">กิจกรรมของฉัน</string>
-    <string name="menu_slideshow">โอนเงิน</string>
+    <string name="menu_slideshow">กิจกรรมที่มีรายชื่อฉัน</string>
     <string name="menu_tools">สแกน QR Code</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
@@ -25,4 +25,5 @@
     <string name="Not_In_Date">ยังไม่ถึงวันที่หรือเวลาที่จัดกิจกรรม\nกรุณารอเมื่อถึงวันหรือหรือเวลากิจกรรมและ แสกนอีกครัง</string>
     <string name="Record">คุณได้เข้าร่วมกิจกรรมครบ\nตามจำนวนที่กำหนดขั้นต่ำ\nระบบจึงทำการบันทึกลงสมุดกิจกรรมเสร็จสิ้น</string>
     <string name="sample_dialog_cancel">Cancelled</string>
+    <string name="logout">โชว์ Qr Code</string>
 </resources>

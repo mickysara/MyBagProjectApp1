@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/black_bg"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/name4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="กิจกรรมที่มีรายชื่อคุณ "
+        android:textColor="@color/angel_white"
+        app:fontFamily="@font/athiti_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.148" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="374dp"
+        android:layout_height="451dp"
+        android:layout_marginBottom="16dp"
+        android:background="#f5f5f5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Showqr"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/text_slideshow"
@@ -20,19 +48,6 @@
         android:gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/athiti_semibold"
-        android:text="กรุณากรอกจำนวณเงิน"
-        android:textColor="@color/angel_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Usertxt" />
-
-    <TextView
         android:id="@+id/text_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,63 +60,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Lable1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/athiti_semibold"
-        android:text="กรุณากรอกบัญชี"
-        android:textColor="@color/angel_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_send" />
-
-    <EditText
-        android:id="@+id/Usertxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:fontFamily="@font/athiti"
-        android:hint="กรุณากรอกบัญชี"
-        android:inputType="textPersonName"
-        android:textColor="@color/angel_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.381"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Lable1" />
-
-    <EditText
-        android:id="@+id/moneytxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:fontFamily="@font/athiti"
-        android:hint="กรุณากรอกจำนวนเงิน"
-        android:inputType="textPersonName"
-        android:textColor="@color/angel_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.381"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lable" />
-
-    <Button
-        android:id="@+id/Showqr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="56dp"
-        android:background="@color/natural_green"
-        android:fontFamily="@font/athiti"
-        android:onClick="onClick"
-        android:text="ตกลง"
-        android:textColor="@color/angel_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moneytxt" />
 </androidx.constraintlayout.widget.ConstraintLayout>
