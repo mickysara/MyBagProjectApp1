@@ -166,17 +166,17 @@ public class HomeFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), ShowQr.class);
-                        startActivity(intent);
-//                        SharedPreferences.Editor editor = sp.edit();
-//                        editor.clear();
-//                        editor.apply();
-//
-//                        Intent intent = new Intent(getContext(), MainActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        Intent intent = new Intent(getContext(), ShowQr.class);
 //                        startActivity(intent);
-//                        getActivity().finish();
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();
+                        editor.apply();
+
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 }
         );
