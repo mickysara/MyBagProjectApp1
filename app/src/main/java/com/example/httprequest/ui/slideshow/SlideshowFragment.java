@@ -265,7 +265,7 @@ public class SlideshowFragment extends Fragment {
                 holder.TimeStart.setText("เวลา: " +person.TimeStart);
                 holder.TimeEnd.setText("เวลา: " +person.TimeEnd);
                 holder.NameLocation.setText("สถานที่: " + person.NameLocation);
-                if(person.Compel.equals(1))
+                if(person.Compel.equals(0))
                 {
                     holder.com.setText("กิจกรรมบังคับ");
                 }else {

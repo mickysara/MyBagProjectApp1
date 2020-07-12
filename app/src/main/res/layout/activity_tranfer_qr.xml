@@ -96,14 +96,14 @@
         android:id="@+id/Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:background="@color/natural_green"
         android:fontFamily="@font/athiti"
         android:onClick="OnSubmit"
         android:text="ยืนยัน"
         android:textColor="@color/angel_white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Money" />
+        app:layout_constraintTop_toBottomOf="@+id/Name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
